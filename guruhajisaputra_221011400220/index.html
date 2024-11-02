@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UTS GURUH</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+ 
+    <script>
+      function showContent(contentId, element) {
+    // Sembunyikan semua konten
+    var contents = document.getElementsByClassName('content-section');
+    for(var i = 0; i < contents.length; i++) {
+        contents[i].style.display = 'none';
+    }
+    
+    // Tampilkan konten yang dipilih
+    var selectedContent = document.getElementById(contentId);
+    if(selectedContent) {
+        selectedContent.style.display = 'block';
+    }
+    
+    // Update active state pada menu
+    var links = document.getElementsByClassName('nav-link');
+    for(var i = 0; i < links.length; i++) {
+        links[i].classList.remove('active');
+    }
+    if(element) {
+        element.classList.add('active');
+    }
+    // Tambahkan di file script.js atau di dalam tag <script>
+document.getElementById('formTambahKaryawan').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Di sini Anda bisa menambahkan logika untuk menyimpan data
+    alert('Data karyawan berhasil ditambahkan!');
+    // Tutup modal
+    var modal = bootstrap.Modal.getInstance(document.getElementById('tambahKaryawanModal'));
+    modal.hide();
+});
+}
+
+    </script>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-section mb-4">
+                <img src="2.png" alt="Profile Picture" class="img-fluid" width="50" height="50"/>
+                <h5 class="mt-2"></h5>
+                <p>Selamat datang, Guruh aji saputra</p>
+                <p><strong>Admin</strong></p>
+            </div>
+            
+            <nav class="nav flex-column">
+                <!-- Dashboard -->
+                <a class="nav-link active" href="#" onclick="showContent('dashboard', this)">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+
+                <!-- Admin Menu -->
+                <p class="mt-3"><strong>MENU ADMIN</strong></p>
+                <a class="nav-link" href="#" onclick="showContent('pengguna', this)">
+                    <i class="fas fa-users"></i> Pengguna
+                </a>
+
+                <!-- Karyawan Menu -->
+                <p class="mt-3"><strong>MENU KARYAWAN</strong></p>
+                <a class="nav-link" href="#karyawan" onclick="showContent('karyawan', this)">
+                    <i class="fas fa-user-friends"></i> Karyawan
+                </a>
+                <a class="nav-link" href="#" onclick="showContent('jabatan', this)">
+                    <i class="fas fa-briefcase"></i> Jabatan
+                </a>
+                <a class="nav-link" href="#" onclick="showContent('divisi', this)">
+                    <i class="fas fa-building"></i> Divisi
+                </a>
+
+                <!-- Menu Absensi -->
+                <p class="mt-3"><strong>MENU ABSENSI</strong></p>
+                <a class="nav-link" href="#" onclick="showContent('absensi', this)">
+                    <i class="fas fa-calendar-check"></i> Absensi dan izin
+                </a>
+               
+                <a class="nav-link" href="#" onclick="showContent('lembur', this)">
+                    <i class="fas fa-clock"></i> Lembur
+                </a>
+
+                <!-- Menu Penggajian -->
+                <p class="mt-3"><strong>MENU PENGGAJIAN</strong></p>
+                <a class="nav-link" href="#" onclick="showContent('slipGaji', this)">
+                    <i class="fas fa-file-invoice-dollar"></i> Slip Gaji
+                </a>
+                <a class="nav-link" href="#" onclick="showContent('cetakSlipGaji', this)">
+                    <i class="fas fa-print"></i> Cetak Slip Gaji
+                </a>
+
+                <!-- Menu Laporan -->
+                <p class="mt-3"><strong>MENU LAPORAN</strong></p>
+                <a class="nav-link" href="#" onclick="showContent('laporan', this)">
+                    <i class="fas fa-file-alt"></i> Laporan
+                </a>
+                <a class="nav-link" href="#" onclick="showContent('cetakLaporan', this)">
+                    <i class="fas fa-print"></i> Cetak Laporan
+                </a>
+
+                <!-- Logout -->
+                <p class="mt-3"><strong>MENU LAINNYA</strong></p>
+                <a class="nav-link" href="#">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Header -->
+            <div class="header">
+                <h4 class="d-inline">HARVARD UNIVERSITY</h4>
+                <i class="fas fa-user-circle profile-icon" onclick="toggleProfileMenu()"></i>
+                <div class="profile-menu" id="profileMenu">
+                    <a href="#" onclick="showContent('profile', this)">Profile</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+           
+            <div class="content-section hidden" id="karyawan">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Data Karyawan</h4>
+                    <button class="btn btn-primary mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <i class="fas fa-plus"></i> Tambah karyawan
+                    </button>
+                </div>
+            
+                <!-- Search and Filter -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Cari karyawan...">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option value="">Semua Divisi</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select">
+                            <option value="">Semua Jabatan</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Staff">Staff</option>
+                            <option value="Supervisor">Supervisor</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Karyawan Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>NIP</th>
+                                        <th>Nama</th>
+                                        <th>Jabatan</th>
+                                        <th>Divisi</th>
+                                        <th>Email</th>
+                                        <th>No. Telepon</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>K001</td>
+                                        <td>guruh aji saputra</td>
+                                        <td>direktur</td>
+                                        <td>IT</td>
+                                        <td>guruh.com</td>
+                                        <td>081234567890</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning" title="Edit"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>K001</td>
+                                        <td>laura</td>
+                                        <td>Manager</td>
+                                        <td>IT</td>
+                                        <td>laura.com</td>
+                                        <td>0836633737</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning" title="Edit"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>K001</td>
+                                        <td>sila</td>
+                                        <td>asisten</td>
+                                        <td>IT</td>
+                                        <td>sila.com</td>
+                                        <td>0836633737</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning" title="Edit"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>K001</td>
+                                        <td>kirana</td>
+                                        <td>HRD</td>
+                                        <td>IT</td>
+                                        <td>laura.com</td>
+                                        <td>0836633737</td>
+                                        <td><span class="badge bg-success">Aktif</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" title="Lihat Detail"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-warning" title="Edit"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <!-- Tambahkan baris lain sesuai kebutuhan -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+     <div class="content-section hidden" id="karyawan">
+        <h5>
+         Data Karyawan
+        </h5>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahKaryawanModal">
+            <i class="fas fa-plus"></i> Tambah Karyawan
+        </button>
+        <table class="table table-bordered">
+         <thead>
+          <tr>
+           <th>
+            Nomor Karyawan
+           </th>
+           <th>
+            Kode Karyawan
+           </th>
+           <th>
+            Nama Karyawan
+           </th>
+           <th>
+            Email Karyawan
+           </th>
+           <th>
+            Alamat Karyawan
+           </th>
+           <th>
+            Jabatan Karyawan
+           </th>
+           <th>
+            Aksi
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            1
+           </td>
+           <td>
+            K001
+           </td>
+           <td>
+            guruhh
+           </td>
+           <td>
+            guruh@.com
+           </td>
+           <td>
+            Jl.  No. 1
+           </td>
+           <td>
+            Manager
+           </td>
+           <td class="table-actions">
+            <i class="fas fa-edit text-warning">
+            </i>
+            <i class="fas fa-trash text-danger">
+            </i>
+           </td>
+          </tr>
+          <tr>
+           <td>
+            2
+           </td>
+           <td>
+            K002
+           </td>
+           <td>
+            kirana
+           </td>
+           <td>
+            rana@.com
+           </td>
+           <td>
+            Jl. No. 2
+           </td>
+           <td>
+            Staff
+           </td>
+           <td class="table-actions">
+            <i class="fas fa-edit text-warning">
+            </i>
+            <i class="fas fa-trash text-danger">
+            </i>
+           </td>
+          </tr>
+          <tr>
+              <td>
+               3
+              </td>
+              <td>
+               K003
+              </td>
+              <td>
+               sila
+              </td>
+              <td>
+               sila@.com
+              </td>
+              <td>
+               Jl. No. 3
+              </td>
+              <td>
+               Staff
+              </td>
+              <td class="table-actions">
+               <i class="fas fa-edit text-warning">
+               </i>
+               <i class="fas fa-trash text-danger">
+               </i>
+              </td>
+             </tr>
+         </tbody>
+        </table>
+       </div>
+       <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <!-- Informasi Pribadi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pribadi</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">NIP</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">No. Telepon</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Pekerjaan -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pekerjaan</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Jabatan</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="supervisor">Supervisor</option>
+                                        <option value="staff">Staff</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Divisi</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Divisi</option>
+                                        <option value="it">IT</option>
+                                        <option value="hr">HR</option>
+                                        <option value="finance">Finance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Bergabung</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" required>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="nonaktif">Non-Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Akun -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Akun</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Role</option>
+                                        <option value="admin">Administrator</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" form="addUserForm" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+    
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+    
+        .form-label {
+            font-weight: 500;
+        }
+    
+        .text-primary {
+            color: #0d6efd;
+        }
+    
+        hr {
+            margin: 0.5rem 0 1rem 0;
+        }
+    </style>
+    
+    <!-- JavaScript untuk handling form -->
+    <script>
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Tambahkan logika untuk menyimpan data
+        alert('Data berhasil disimpan!');
+        // Tutup modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+        modal.hide();
+    });
+    </script>
+       
+    <div class="content-section hidden" id="pengguna">
+        <h4>Data Pengguna</h4>
+        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fas fa-plus"></i> Tambah Pengguna
+        </button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>laura</td>
+                    <td>laura@.com</td>
+                    <td>Administrator</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>vadel</td>
+                    <td>vadel@.com</td>
+                    <td>Administrator</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>haye</td>
+                    <td>haye@.com</td>
+                    <td>Administrator</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>nathan</td>
+                    <td>nathan@.com</td>
+                    <td>Administrator</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel"> </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <!-- Informasi Pribadi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pribadi</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">NIP</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">No. Telepon</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Pekerjaan -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pekerjaan</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Jabatan</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="supervisor">Supervisor</option>
+                                        <option value="staff">Staff</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Divisi</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Divisi</option>
+                                        <option value="it">IT</option>
+                                        <option value="hr">HR</option>
+                                        <option value="finance">Finance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Bergabung</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" required>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="nonaktif">Non-Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Akun -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Akun</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Role</option>
+                                        <option value="admin">Administrator</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" form="addUserForm" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+    
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+    
+        .form-label {
+            font-weight: 500;
+        }
+    
+        .text-primary {
+            color: #0d6efd;
+        }
+    
+        hr {
+            margin: 0.5rem 0 1rem 0;
+        }
+    </style>
+    
+    <!-- JavaScript untuk handling form -->
+    <script>
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Tambahkan logika untuk menyimpan data
+        alert('Data berhasil disimpan!');
+        // Tutup modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+        modal.hide();
+    });
+    </script>
+    <div class="content-section hidden" id="jabatan">
+        <h4>Data Jabatan</h4>
+        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fas fa-plus"></i> Tambah jabatan
+        </button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID Jabatan</th>
+                    <th>Nama Jabatan</th>
+                    <th>Deskripsi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>J001</td>
+                    <td>Manager</td>
+                    <td>Memimpin tim dan bertanggung jawab atas hasil kerja.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>J002</td>
+                    <td>Staff</td>
+                    <td>Melaksanakan tugas administratif dan operasional.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>J002</td>
+                    <td>Supervisor</td>
+                    <td>Mengawasi dan membimbing anggota tim dalam melaksanakan tugas sehari-hari.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>J003</td>
+                    <td>Staff IT</td>
+                    <td>Bertanggung jawab dalam pengelolaan dan perawatan sistem informasi perusahaan.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>J004</td>
+                    <td>HRD</td>
+                    <td>Mengelola rekrutmen, pengembangan, dan kesejahteraan karyawan.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Tambah jabatan baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <!-- Informasi Pribadi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pribadi</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">NIP</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">No. Telepon</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Pekerjaan -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Pekerjaan</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Jabatan</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Jabatan</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="supervisor">Supervisor</option>
+                                        <option value="staff">Staff</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Divisi</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Divisi</option>
+                                        <option value="it">IT</option>
+                                        <option value="hr">HR</option>
+                                        <option value="finance">Finance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Bergabung</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" required>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="nonaktif">Non-Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- Informasi Akun -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h6 class="text-primary">Informasi Akun</h6>
+                                <hr>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password</label>
+                                    <input type="password" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-select" required>
+                                        <option value="">Pilih Role</option>
+                                        <option value="admin">Administrator</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" form="addUserForm" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+    
+        .modal-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+    
+        .form-label {
+            font-weight: 500;
+        }
+    
+        .text-primary {
+            color: #0d6efd;
+        }
+    
+        hr {
+            margin: 0.5rem 0 1rem 0;
+        }
+    </style>
+    
+    <!-- JavaScript untuk handling form -->
+    <script>
+    document.getElementById('addUserForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Tambahkan logika untuk menyimpan data
+        alert('Data berhasil disimpan!');
+        // Tutup modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+        modal.hide();
+    });
+    </script>
+    <div class="content-section hidden" id="divisi">
+        <h4>Data Divisi</h4>
+        <button class="btn btn-primary mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fas fa-plus"></i> Tambah divisi
+        </button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID Divisi</th>
+                    <th>Nama Divisi</th>
+                    <th>Deskripsi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>D001</td>
+                    <td>IT</td>
+                    <td>Divisi yang bertanggung jawab atas teknologi informasi.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>D002</td>
+                    <td>HR</td>
+                    <td>Divisi yang mengelola sumber daya manusia.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>D003</td>
+                    <td>Finance</td>
+                    <td>Divisi yang bertanggung jawab atas pengelolaan keuangan perusahaan.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>D004</td>
+                    <td>Marketing</td>
+                    <td>Divisi yang bertugas mempromosikan produk dan mengembangkan strategi pemasaran.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>D005</td>
+                    <td>IT</td>
+                    <td>Divisi yang bertanggung jawab atas infrastruktur teknologi dan pengembangan sistem informasi.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>D006</td>
+                    <td>Operations</td>
+                    <td>Divisi yang menangani operasional harian untuk memastikan efisiensi proses kerja.</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="content-section hidden" id="absensi">
+    <h4>Data Absensi dan Izin</h4>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAbsensiModal">
+        <i class="fas fa-plus"></i> Tambah Absensi
+    </button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID Absensi</th>
+                <th>NIP</th>
+                <th>Nama Karyawan</th>
+                <th>Tanggal</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>A001</td>
+                <td>K001</td>
+                <td>guruh aji saputra</td>
+                <td>2023-10-01</td>
+                <td><span class="badge bg-success">Hadir</span></td>
+                <td>
+                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>A002</td>
+                <td>K002</td>
+                <td>kirana</td>
+                <td>2023-10-01</td>
+                <td><span class="badge bg-success">Hadir</span></td>
+                <td>
+                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>A003</td>
+                <td>K003</td>
+                <td>laura</td>
+                <td>2023-10-01</td>
+                <td><span class="badge bg-success">Hadir</span></td>
+                <td>
+                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>A004</td>
+                <td>K004</td>
+                <td>nathan</td>
+                <td>2023-10-01</td>
+                <td><span class="badge bg-success">Hadir</span></td>
+                <td>
+                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>A002</td>
+                <div class="content-section hidden" id="izin">
+                    <h4>Data Izin Karyawan</h4>
+                    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addIzinModal">
+                        <i class="fas fa-plus"></i> Tambah Izin
+                    </button>
+                    
+                    <!-- Filter dan Search -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" placeholder="Pilih Tanggal">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option value="">Semua Jenis Izin</option>
+                                <option value="sakit">Sakit</option>
+                                <option value="cuti">Cuti</option>
+                                <option value="keperluan">Keperluan Pribadi</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Cari karyawan...">
+                        </div>
+                    </div>
+        
+                    <div class="content-section hidden" id="izin">
+                        <h4>Data Izin Karyawan</h4>
+                        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addIzinModal">
+                            <i class="fas fa-plus"></i> Tambah Izin
+                        </button>
+                        
+                        <!-- Filter dan Search -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <input type="date" class="form-control" placeholder="Pilih Tanggal">
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control">
+                                    <option value="">Semua Jenis Izin</option>
+                                    <option value="sakit">Sakit</option>
+                                    <option value="cuti">Cuti</option>
+                                    <option value="keperluan">Keperluan Pribadi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Cari karyawan...">
+                            </div>
+                        </div>
+                    
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID Izin</th>
+                                    <th>NIP</th>
+                                    <th>Nama Karyawan</th>
+                                    <th>Jenis Izin</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Selesai</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>IZ001</td>
+                                    <td>K001</td>
+                                    <td>tom haye</td>
+                                    <td>Sakit</td>
+                                    <td>2023-10-01</td>
+                                    <td>2023-10-02</td>
+                                    <td><span class="badge bg-success">Disetujui</span></td>
+                                    <td>Demam</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>IZ002</td>
+                                    <td>K002</td>
+                                    <td>ritsuki</td>
+                                    <td>Sakit</td>
+                                    <td>2023-10-02</td>
+                                    <td>2023-10-04</td>
+                                    <td><span class="badge bg-success">Disetujui</span></td>
+                                    <td>gerd</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="content-section hidden" id="lembur">
+                        <h4>Data Lembur Karyawan</h4>
+                        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addLemburModal">
+                            <i class="fas fa-plus"></i> Tambah Lembur
+                        </button>
+                    
+                        <!-- Filter dan Search -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <input type="month" class="form-control" placeholder="Pilih Bulan">
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control">
+                                    <option value="">Semua Divisi</option>
+                                    <option value="IT">IT</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Finance">Finance</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Cari karyawan...">
+                            </div>
+                        </div>
+                    
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID Lembur</th>
+                                    <th>NIP</th>
+                                    <th>Nama Karyawan</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam Mulai</th>
+                                    <th>Jam Selesai</th>
+                                    <th>Total Jam</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>L001</td>
+                                    <td>K001</td>
+                                    <td>guruh aji saputra</td>
+                                    <td>2023-10-01</td>
+                                    <td>19:00</td>
+                                    <td>23:00</td>
+                                    <td>3 jam</td>
+                                    <td>Project</td>
+                                    <td><span class="badge bg-success">Disetujui</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>L002</td>
+                                    <td>K002</td>
+                                    <td>kirana</td>
+                                    <td>2023-10-02</td>
+                                    <td>18:00</td>
+                                    <td>21:00</td>
+                                    <td>3 jam</td>
+                                    <td>Laporan Bulanan</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>L003</td>
+                                    <td>K003</td>
+                                    <td>nathan</td>
+                                    <td>2023-10-02</td>
+                                    <td>18:00</td>
+                                    <td>21:00</td>
+                                    <td>3 jam</td>
+                                    <td>Laporan Bulanan</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>L004</td>
+                                    <td>K004</td>
+                                    <td>laura</td>
+                                    <td>2023-10-02</td>
+                                    <td>18:00</td>
+                                    <td>21:00</td>
+                                    <td>3 jam</td>
+                                    <td>Laporan Bulanan</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="content-section hidden" id="slipGaji">
+                        <h4>Slip Gaji</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Bulan</option>
+                                    <option>Januari</option>
+                                    <option>Februari</option>
+                                    <!-- Tambahkan opsi lain -->
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Tahun</option>
+                                    <option>2023</option>
+                                    <option>2022</option>
+                                    <!-- Tambahkan opsi lain -->
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">Lihat Slip Gaji</button>
+                            </div>
+                        </div>
+                        <div id="slipGajiContent">
+                            <!-- Konten slip gaji akan ditampilkan di sini -->
+                        </div>
+                    </div>
+                    <div class="content-section hidden" id="cetakSlipGaji">
+                        <h4>Cetak Slip Gaji</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Karyawan</option>
+                                    <option>Rio Febriansyah</option>
+                                    <!-- Tambahkan opsi lain -->
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Bulan</option>
+                                    <option>Januari</option>
+                                    <option>Februari</option>
+                                    <!-- Tambahkan opsi lain -->
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Tahun</option>
+                                    <option>2023</option>
+                                    <option>2022</option>
+                                    <!-- Tambahkan opsi lain -->
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">Cetak Slip Gaji</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section hidden" id="laporan">
+                        <h4>Laporan</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option>Pilih Jenis Laporan</option>
+                                    <option>Laporan Kehadiran</option>
+                                    <option>Laporan Gaji</option>
+                                    <option>Laporan Lembur</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" placeholder="Tanggal Mulai">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" placeholder="Tanggal Akhir">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">Tampilkan Laporan</button>
+                            </div>
+                        </div>
+                        <div id="laporanContent">
+                            <!-- Konten laporan akan ditampilkan di sini -->
+                        </div>
+                    </div>
+                    <div class="content-section hidden" id="cetakLaporan">
+                        <h4>Cetak Laporan</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option value="">Pilih Jenis Laporan</option>
+                                    <option value="kehadiran">Laporan Kehadiran</option>
+                                    <option value="gaji">Laporan Gaji</option>
+                                    <option value="lembur">Laporan Lembur</option>
+                                    <option value="izin">Laporan Izin</option>
+                                    <option value="kinerja">Laporan Kinerja</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" placeholder="Tanggal Mulai">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" placeholder="Tanggal Akhir">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-print"></i> Cetak Laporan
+                                </button>
+                                <button class="btn btn-success">
+                                    <i class="fas fa-file-excel"></i> Export Excel
+                                </button>
+                            </div>
+                        </div>
+                    
+                        <!-- Preview Laporan -->
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Preview Laporan</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>NIP</th>
+                                                <th>Nama Karyawan</th>
+                                                <th>Divisi</th>
+                                                <th>Jabatan</th>
+                                                <th>Tanggal</th>
+                                                <th>Status</th>
+                                                <th>Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>K001</td>
+                                                <td>guruh aji saputra</td>
+                                                <td>IT</td>
+                                                <td>Manager</td>
+                                                <td>2023-10-01</td>
+                                                <td><span class="badge bg-success">Hadir</span></td>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>K002</td>
+                                                <td>kirana</td>
+                                                <td>HR</td>
+                                                <td>Staff</td>
+                                                <td>2023-10-01</td>
+                                                <td><span class="badge bg-warning">Izin</span></td>
+                                                <td>Sakit</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>K003</td>
+                                                <td>Budi Santoso</td>
+                                                <td>Finance</td>
+                                                <td>Staff</td>
+                                                <td>2023-10-01</td>
+                                                <td><span class="badge bg-success">Hadir</span></td>
+                                                <td>-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                    
+                                <!-- Pagination -->
+                                <nav aria-label="Page navigation" class="mt-4">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    
+                        <!-- Summary -->
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Ringkasan</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="border p-3 rounded">
+                                            <h6>Total Karyawan</h6>
+                                            <h4>150</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border p-3 rounded">
+                                            <h6>Hadir</h6>
+                                            <h4>142 (95%)</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border p-3 rounded">
+                                            <h6>Izin</h6>
+                                            <h4>5 (3%)</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="border p-3 rounded">
+                                            <h6>Tidak Hadir</h6>
+                                            <h4>3 (2%)</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section" id="dashboard">
+                        <h4>DASHBOARD </br>Sistem Manajemen Karyawan </h4>
+                        <div class="row">
+                            <!-- Card Total Karyawan - Biru -->
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Total Karyawan</h6>
+                                                <h3 class="mb-0">150</h3>
+                                            </div>
+                                            <i class="fas fa-users fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Card Kehadiran Hari Ini - Hijau -->
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Kehadiran Hari Ini</h6>
+                                                <h3 class="mb-0">95%</h3>
+                                            </div>
+                                            <i class="fas fa-calendar-check fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Card Izin Hari Ini - Kuning -->
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-dark mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Izin Hari Ini</h6>
+                                                <h3 class="mb-0">5</h3>
+                                            </div>
+                                            <i class="fas fa-user-clock fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <!-- Card Lembur Bulan Ini - Merah -->
+                            <div class="col-md-3">
+                                <div class="card bg-danger text-white mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Lembur Bulan Ini</h6>
+                                                <h3 class="mb-0">20 jam</h3>
+                                            </div>
+                                            <i class="fas fa-clock fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- CSS tambahan untuk efek hover dan transisi -->
+                        <style>
+                            .card {
+                                transition: transform 0.3s ease-in-out;
+                                cursor: pointer;
+                            }
+                    
+                            .card:hover {
+                                transform: translateY(-5px);
+                            }
+                    
+                            .card .fa-2x {
+                                opacity: 0.8;
+                            }
+                    
+                            /* Warna gradien alternatif */
+                            .bg-primary {
+                                background: linear-gradient(45deg, #4e73df, #224abe) !important;
+                            }
+                    
+                            .bg-success {
+                                background: linear-gradient(45deg, #1cc88a, #13855c) !important;
+                            }
+                    
+                            .bg-warning {
+                                background: linear-gradient(45deg, #f6c23e, #dda20a) !important;
+                            }
+                    
+                            .bg-danger {
+                                background: linear-gradient(45deg, #e74a3b, #be2617) !important;
+                            }
+                    
+                            /* Bayangan untuk card */
+                            .card {
+                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            }
+                    
+                            /* Padding tambahan */
+                            .card-body {
+                                padding: 1.5rem;
+                            }
+                    
+                            /* Ukuran font */
+                            .card h3 {
+                                font-size: 2rem;
+                                font-weight: bold;
+                            }
+                    
+                            .card h6 {
+                                font-size: 0.9rem;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                            }
+                        </style>
+                    </div>
+                    <!-- Modal Tambah Karyawan -->
+<div class="modal fade" id="tambahKaryawanModal" tabindex="-1" aria-labelledby="tambahKaryawanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahKaryawanModalLabel">Tambah Karyawan Baru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahKaryawan">
+                    <div class="row">
+                        <!-- Data Pribadi -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">NIP</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">No. Telepon</label>
+                                <input type="tel" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Pekerjaan -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Jabatan</label>
+                                <select class="form-select" required>
+                                    <option value="">Pilih Jabatan</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="supervisor">Supervisor</option>
+                                    <option value="staff">Staff</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Divisi</label>
+                                <select class="form-select" required>
+                                    <option value="">Pilih Divisi</option>
+                                    <option value="it">IT</option>
+                                    <option value="hr">HR</option>
+                                    <option value="finance">Finance</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Bergabung</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" form="formTambahKaryawan" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Jabatan -->
+<div class="modal fade" id="tambahJabatanModal" tabindex="-1" aria-labelledby="tambahJabatanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahJabatanModalLabel">Tambah Jabatan Baru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formTambahJabatan">
+                    <div class="mb-3">
+                        <label for="kodeJabatan" class="form-label">Kode Jabatan</label>
+                        <input type="text" class="form-control" id="kodeJabatan" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="namaJabatan" class="form-label">Nama Jabatan</label>
+                        <input type="text" class="form-control" id="namaJabatan" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deskripsiJabatan" class="form-label">Deskripsi Jabatan</label>
+                        <textarea class="form-control" id="deskripsiJabatan" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gajiPokok" class="form-label">Gaji Pokok</label>
+                        <input type="number" class="form-control" id="gajiPokok" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" form="formTambahJabatan" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('formTambahJabatan').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Di sini Anda bisa menambahkan logika untuk menyimpan data jabatan
+        alert('Data jabatan berhasil ditambahkan!');
+        // Tutup modal
+        var modal = bootstrap.Modal.getInstance(document.getElementById('tambahJabatanModal'));
+        modal.hide();
+    });
+    </script>
+                
+                    
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
